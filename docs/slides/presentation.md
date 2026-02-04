@@ -163,6 +163,8 @@ Or set VS Code user setting:
 "dotfiles.repository": "your-github-id/your-dotfiles-repo"
 ```
 
+> NOTE: For private repos you must add a PAT (readonly, repospecific, can be clear text ⚠️ - no the risk!)
+
 Your shell & git config follow you **into every container**.
 
 ---
@@ -242,7 +244,7 @@ Store `settings.json` as a **chezmoi template**:
 |-------|------|-------------|
 | Dotfiles | **chezmoi** | Templated, encrypted, scriptable |
 | VS Code settings | Settings Sync **+** chezmoi | Static sync + conditional overrides |
-| AI prompts | chezmoi templates / symlinks | Parameterized prompts per context |
+| AI prompts | chezmoi or VSCode Settings | Versioning, git tracking |
 | Environments | Dev Containers / Codespaces | Auto-apply dotfiles on creation |
 
 ---
