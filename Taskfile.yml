@@ -1,0 +1,27 @@
+version: '3'
+
+vars:
+  CHEZMOI_SOURCE: .
+  DATA_FILE: /workspaces/dotfiles_demo/.dotfile_chezmoi_data.json
+
+tasks:
+  default:
+    desc: List available tasks
+    cmds:
+      - task --list
+    silent: true
+
+  local:init:
+    desc: Initialize and apply chezmoi with default settings
+    cmds:
+      - chezmoi init --apply --source={{.CHEZMOI_SOURCE}}
+
+  local:init-with-data:
+    desc: Initialize and apply chezmoi with custom data file
+    cmds:
+      - chezmoi init --apply --source={{.CHEZMOI_SOURCE}} --override-data-file={{.DATA_FILE}}
+
+  local:init-no-data:
+    desc: Initialize and apply chezmoi without data prompts
+    cmds:
+      - chezmoi init --apply --data=false --source={{.CHEZMOI_SOURCE}}

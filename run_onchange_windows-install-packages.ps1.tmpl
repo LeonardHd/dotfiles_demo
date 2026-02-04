@@ -1,0 +1,49 @@
+{{ if eq .chezmoi.os "windows" -}}
+# Packages hash: {{ .packages.windows | toJson | sha256sum }}
+
+# Check if winget is available
+if (-not (Get-Command winget -ErrorAction SilentlyContinue)) {
+    Write-Error "winget could not be found. Please install App Installer from the Microsoft Store."
+    exit 1
+}
+
+Write-Host "Installing Windows packages via winget..." -ForegroundColor Cyan
+
+# Install winget packages
+{{ range .packages.windows.winget -}}
+$packageId = {{ . | quote }}
+Write-Host "Checking package: $packageId" -ForegroundColor Yellow
+
+# Check if package is already installed
+$installed = winget list --id $packageId --exact --accept-source-agreements 2>$null
+if ($LASTEXITCODE -eq 0 -and $installed -match $packageId) {
+    Write-Host "  $packageId is already installed, skipping" -ForegroundColor Green
+} else {
+    Write-Host "  Installing $packageId..." -ForegroundColor Yellow
+    winget install --id $packageId --exact --silent --accept-package-agreements --accept-source-agreements
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "  $packageId installed successfully" -ForegroundColor Green
+    } else {
+        Write-Host "  Failed to install $packageId" -ForegroundColor Red
+    }
+}
+
+{{ end -}}
+
+Write-Host "Windows package installation complete!" -ForegroundColor Cyan
+
+# git config (used because VsCode in devcontainer writes gitconfig)
+# user.name
+& git config --global user.name {{ .name | quote }}
+{{ if ne .email "" -}}
+& git config --global user.email {{ .email | quote }}
+{{ end -}}
+
+# aliases
+{{- range $alias, $command := .git.aliases }}
+& git config --global alias.{{ $alias }} {{ $command | quote }}
+{{- end }}
+
+# [credential "https://dev.azure.com"] useHttpPath = true
+& git config --global credential.https://dev.azure.com.useHttpPath true
+{{- end }}

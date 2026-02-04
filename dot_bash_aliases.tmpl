@@ -1,0 +1,12 @@
+alias lh='ls -lisa'
+alias gss='git show --stat $1'
+
+# List all aliases (shell + git)
+aliases() {
+    echo "=== Shell Aliases ==="
+    alias
+    echo ""
+    echo "=== Git Aliases ==="
+    git config --get-regexp '^alias\.' | sed 's/^alias\./  /' | sed 's/ / = /'
+}
+

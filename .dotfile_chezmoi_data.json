@@ -1,0 +1,13 @@
+{
+    "name": "Your Name",
+    "email": "your@email.com",
+    "git": {
+        "aliases": {
+            "f": "fetch",
+            "s": "status --short",
+            "l": "log --oneline",
+            "df": "diff --staged",
+            "d": "diff"
+        }
+    }
+}

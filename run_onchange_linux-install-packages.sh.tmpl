@@ -1,0 +1,51 @@
+{{ if eq .chezmoi.os "linux" -}}
+#!/bin/bash
+
+# check if the package manager is installed
+if ! command -v apt-get &> /dev/null; then
+    echo "apt-get could not be found"
+    exit 1
+else
+    # update the package list
+    sudo apt-get update
+    # install packages
+    {{ range .packages.linux.apt -}}
+    sudo apt-get install -y {{ . | quote }}
+    {{ end -}}
+fi
+
+# webi based installs (requires curl and a sh)
+if ! command -v curl &> /dev/null; then
+    echo "curl could not be found"
+    exit 1
+fi
+if ! command -v sh &> /dev/null; then
+    echo "sh could not be found"
+    exit 1
+fi
+# install webi packages
+{{ range .packages.linux.webi -}}
+if ! command -v {{ . | quote }} &> /dev/null; then
+    curl -sS https://webi.sh/{{ . | quote }} | sh
+else
+    echo "{{ . | quote }} already installed, skipping"
+fi
+{{ end -}}
+
+# custom installs
+
+# git config (used because VsCode in devcontainer writes gitconfig)
+git config --global user.name {{ .name | quote }}
+{{ if ne .email "" -}}
+git config --global user.email {{ .email | quote }}
+{{ end -}}
+
+# aliases
+{{- range $alias, $command := .git.aliases }}
+git config --global alias.{{ $alias }} {{ $command | quote }}
+{{- end }}
+
+# [credential "https://dev.azure.com"] useHttpPath = true
+git config --global credential.https://dev.azure.com.useHttpPath true
+
+{{- end }}

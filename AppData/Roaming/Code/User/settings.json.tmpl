@@ -1,0 +1,48 @@
+{
+    // GitHub Copilot
+    "github.copilot.editor.enableAutoCompletions": true,
+    "chat.instructionsFilesLocations": {
+        ".github/instructions": true,
+        "{{.chezmoi.homeDir}}/.github/instructions": true
+    },
+    "chat.promptFilesLocations": {
+        ".github/prompts": true,
+        "{{.chezmoi.homeDir}}/.github/prompts": true
+    },
+    "chat.tools.terminal.autoApprove": {
+        "mkdir": true,
+        "/^git (status|show\\b.*)$/": true,
+        "del": false,
+        "/dangerous/": false,
+        "git add": true,
+        "git commit": true,
+        "/^uv run (pytest|ruff)\\b.*$/": true
+    },
+    "chat.tools.terminal.terminalProfile.linux": {
+        "path": "bash", // Use Bash instead of Zsh
+        "args": [], // Launch as a non-login shell (no `-l` needed)
+        "env": {
+            "COPILOT": "1" // Optional flag to detect Copilot sessions in shell init
+        }
+    },
+    "chat.tools.terminal.terminalProfile.windows": {
+        "path": "C:\\Program Files\\Git\\bin\\bash.exe", // Use Git Bash (pwsh would require Powershell Core)
+        "args": [],
+        "env": {
+            "COPILOT": "1" // Optional flag to detect Copilot sessions in shell init
+        }
+    },
+    "chat.viewSessions.orientation": "stacked",
+    "chat.mcp.gallery.enabled": true,
+    // dotfiles:
+    "dotfiles.repository": "https://github.com/LeonardHd/dotfiles_demo.git",
+    "dotfiles.targetPath": "~/dotfiles",
+    "dotfiles.installCommand": "install.sh",
+    "dev.containers.defaultExtensions": [
+        "eamodio.gitlens",
+        "hediet.vscode-drawio",
+        "oderwat.indent-rainbow",
+        "github.copilot"
+    ],
+    "dev.containers.cacheVolume": true,
+}
