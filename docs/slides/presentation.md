@@ -183,6 +183,10 @@ Codespaces clones your repo and runs the install script on creation.
 
 > Result: Cloud IDE with your aliases, your prompt, your Git identity.
 
+--- 
+
+Demo
+
 ---
 
 ## Why chezmoi Instead of a Bare Git Repo?
