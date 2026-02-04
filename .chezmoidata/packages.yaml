@@ -1,0 +1,11 @@
+packages:
+  linux:
+    apt:
+    - 'vim'
+    - 'git'
+    webi:
+    - gh
+  windows:
+    winget:
+    - 'Git.Git'
+    - 'Microsoft.VisualStudioCode'

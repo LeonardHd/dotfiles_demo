@@ -1,0 +1,10 @@
+[user]
+	name = {{ .name | quote }}
+[alias]
+	f = fetch
+	s = status --short
+	l = log --oneline
+	df = diff --staged
+	d = diff
+[credential "https://dev.azure.com"]
+        useHttpPath = true

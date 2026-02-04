@@ -1,0 +1,26 @@
+.github/
+install.sh
+LICENSE
+README.md
+tests
+.vscode/
+docs/
+
+# Based on https://www.chezmoi.io/user-guide/manage-machine-to-machine-differences/#ignore-files-or-a-directory-on-different-machines
+
+{{ if eq .chezmoi.os "darwin" }}
+# macOS specific ignores
+AppData/
+{{ end }}
+{{ if eq .chezmoi.os "linux" }}
+# Linux specific ignores
+AppData/
+{{ end }}
+{{ if eq .chezmoi.os "windows" }}
+# Windows specific ignores
+.bashrc
+.dircolors
+.bash_aliases
+.config/nvim
+{{ end }}
+
